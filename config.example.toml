@@ -1,0 +1,35 @@
+# انسخ هذا الملف إلى config.toml وعدّله.
+
+[telegram]
+# من @BotFather في تيليجرام: /newbot ثم انسخ التوكن
+token = "123456789:ABCdefGhIJKlmNoPQRstuVWxyZ"
+# رقم محادثتك: أرسل أي رسالة لبوتك ثم افتح
+# https://api.telegram.org/bot<التوكن>/getUpdates وانسخ chat.id
+# لمجموعة: أضف البوت إليها، والرقم يبدأ بسالب مثل -1001234567890
+chat_id = "123456789"
+
+[monitor]
+interval = 60          # ثوانٍ بين الجولات في وضع serve
+timeout = 10           # أقصى انتظار لرد الموقع
+fail_threshold = 2     # جولات فاشلة متتالية قبل التنبيه (يمنع الإنذار الكاذب)
+retry_delay = 2        # ثوانٍ قبل إعادة المحاولة داخل الجولة نفسها، و -1 لإلغائها
+slow_ms = 3000         # أبطأ من هذا يظهر بالأصفر في /status
+ssl_warn_days = 14     # نبّهني إن بقي على انتهاء الشهادة هذا العدد من الأيام أو أقل
+summary_hour = 9       # ملخص يومي بعد هذه الساعة (بتوقيت السيرفر). احذف السطر لإلغائه
+db = "monitor.sqlite"  # النتائج والحالة، بجانب ملف الإعداد
+keep_days = 30         # احذف النتائج الأقدم من هذا
+
+# كل [[check]] فحص مستقل. الاسم يظهر في الرسائل.
+[[check]]
+name = "موقعي"
+url = "https://example.com/"
+expect_status = 200
+keyword = "Example Domain"   # اختياري: يجب أن تظهر هذه الكلمة في الصفحة
+
+[[check]]
+name = "واجهة المتجر"
+url = "https://example.com/api/health"
+
+[[check]]
+name = "SSH"
+tcp = "example.com:22"       # فحص منفذ: قاعدة بيانات، بريد، SSH

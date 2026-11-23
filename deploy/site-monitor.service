@@ -1,0 +1,24 @@
+# /etc/systemd/system/site-monitor.service
+[Unit]
+Description=Site monitor with Telegram alerts
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=monitor
+Group=monitor
+WorkingDirectory=/opt/site-monitor
+ExecStart=/usr/bin/python3 /opt/site-monitor/monitor.py serve -c /opt/site-monitor/config.toml
+Restart=on-failure
+RestartSec=10
+MemoryMax=128M
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target
